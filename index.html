@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3 Días — Enrique</title>
+<meta name="theme-color" content="#08080c" />
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="3 Días">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --fondo:#08080c;
+    --texto:#f2f2f7;
+    --suave:#8e8e9c;
+    --acento:#ff2d78;
+    --linea:rgba(255,255,255,.08);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--fondo);
+    color:var(--texto);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    padding-bottom:130px;
+    overflow-x:hidden;
+  }
+  .fondo{position:fixed; inset:0; z-index:-1; overflow:hidden;}
+  .fondo span{position:absolute; border-radius:50%; filter:blur(90px); opacity:.35;}
+  .fondo .f1{width:55vw;height:55vw;left:-15vw;top:-15vw;background:#ff2d78;animation:flota 22s ease-in-out infinite}
+  .fondo .f2{width:50vw;height:50vw;right:-12vw;top:10vh;background:#5b3dff;animation:flota 28s ease-in-out infinite reverse}
+  .fondo .f3{width:45vw;height:45vw;left:25vw;bottom:-20vw;background:#ff8a3d;animation:flota 32s ease-in-out infinite}
+  @keyframes flota{
+    0%,100%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(6vw,-4vh) scale(1.2)}
+  }
+  .hero{
+    max-width:1100px; margin:0 auto; padding:56px 22px 24px;
+    display:grid; grid-template-columns:300px 1fr; gap:44px; align-items:end;
+  }
+  @media(max-width:760px){
+    .hero{grid-template-columns:1fr; gap:26px; padding-top:34px; text-align:center}
+    .hero .meta{justify-content:center}
+    .portada{max-width:280px; margin:0 auto}
+  }
+  .portada{
+    position:relative; aspect-ratio:1/1; border-radius:22px; overflow:hidden;
+    background:#101018;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.06) inset;
+    animation:respira 8s ease-in-out infinite;
+  }
+  @keyframes respira{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+  .capa{position:absolute; inset:-40%; filter:blur(48px)}
+  .c1{
+    background:
+      radial-gradient(circle at 30% 30%, #ff8a3d 0%, transparent 55%),
+      radial-gradient(circle at 72% 62%, #ff2d78 0%, transparent 58%);
+    animation:mueve1 16s ease-in-out infinite;
+  }
+  .c2{
+    background:
+      radial-gradient(circle at 70% 25%, #5b3dff 0%, transparent 55%),
+      radial-gradient(circle at 25% 75%, #00d4ff 0%, transparent 55%);
+    animation:mueve2 20s ease-in-out infinite;
+    opacity:.9;
+  }
+  .c3{
+    background:radial-gradient(circle at 50% 50%, #ffe45e 0%, transparent 45%);
+    opacity:.5; animation:mueve3 12s ease-in-out infinite;
+  }
+  @keyframes mueve1{0%,100%{transform:translate(-6%,-4%) rotate(0)}50%{transform:translate(8%,7%) rotate(14deg)}}
+  @keyframes mueve2{0%,100%{transform:translate(5%,6%) rotate(0)}50%{transform:translate(-7%,-8%) rotate(-12deg)}}
+  @keyframes mueve3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10%,8%) scale(1.3)}}
+  .grano{
+    position:absolute; inset:0; pointer-events:none; opacity:.22; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+  }
+  .portada-texto{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    justify-content:flex-end; padding:22px; z-index:3;
+  }
+  .portada-texto h1{
+    font-size:clamp(34px,6vw,46px); font-weight:800; letter-spacing:-.04em;
+    line-height:.95; text-shadow:0 4px 30px rgba(0,0,0,.5);
+  }
+  .portada-texto p{
+    font-size:13px; letter-spacing:.28em; text-transform:uppercase;
+    opacity:.8; margin-top:8px; font-weight:600;
+  }
+  .tipo{
+    font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--acento); font-weight:700; margin-bottom:12px;
+  }
+  .hero h2{
+    font-size:clamp(38px,7vw,64px); font-weight:800; letter-spacing:-.04em; line-height:1;
+  }
+  .hero .artista{
+    font-size:20px; color:var(--suave); margin-top:10px; font-weight:500;
+  }
+  .meta{
+    display:flex; flex-wrap:wrap; gap:14px; margin-top:18px;
+    font-size:13px; color:var(--suave);
+  }
+  .meta span{display:flex; align-items:center; gap:6px}
+  .meta span::before{content:"•"; color:var(--acento)}
+  .meta span:first-child::before{display:none}
+  main{max-width:1100px; margin:0 auto; padding:30px 22px 40px}
+  .seccion-titulo{
+    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--suave); font-weight:700; margin:34px 0 14px;
+  }
+  .sobre{
+    background:rgba(255,255,255,.03); border:1px solid var(--linea);
+    border-radius:18px; padding:24px; line-height:1.7; color:#c9c9d4;
+    font-size:15px;
+  }
+  .track{border-bottom:1px solid var(--linea); transition:background .2s;}
+  .track:hover{background:rgba(255,255,255,.025)}
+  .fila{
+    display:grid; grid-template-columns:34px 34px 1fr auto 26px;
+    align-items:center; gap:12px; padding:14px 8px; cursor:pointer;
+  }
+  .num{font-size:13px; color:var(--suave); font-variant-numeric:tabular-nums}
+  .mini-play{
+    width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.08); color:#fff; font-size:11px;
+    display:grid;place-items:center; transition:.2s; flex:none;
+  }
+  .mini-play:hover{background:var(--acento); transform:scale(1.08)}
+  .track.sonando .mini-play{background:var(--acento)}
+  .track.sonando .num{color:var(--acento)}
+  .titulo{font-size:16px; font-weight:600; letter-spacing:-.01em}
+  .dur{font-size:13px; color:var(--suave); font-variant-numeric:tabular-nums}
+  .chev{font-size:14px; color:var(--suave); transition:transform .3s}
+  .track.abierta .chev{transform:rotate(180deg)}
+  .detalle{display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease}
+  .track.abierta .detalle{grid-template-rows:1fr}
+  .detalle-in{overflow:hidden}
+  .detalle-caja{padding:4px 8px 26px 80px}
+  @media(max-width:600px){.detalle-caja{padding-left:8px}}
+  .bloque{margin-top:20px}
+  .bloque h4{
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--acento); margin-bottom:8px; font-weight:700;
+  }
+  .bloque p{font-size:15px; line-height:1.75; color:#c9c9d4}
+  .letra{white-space:pre-line; color:#a9a9b8 !important; font-size:14px !important}
+  .player{
+    position:fixed; left:0; right:0; bottom:0; z-index:50;
+    display:flex; align-items:center; gap:16px;
+    padding:12px 22px;
+    background:rgba(14,14,20,.82);
+    backdrop-filter:blur(24px) saturate(180%);
+    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    border-top:1px solid rgba(255,255,255,.09);
+  }
+  .p-portada{
+    width:48px;height:48px;border-radius:10px;flex:none;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#ff2d78,#5b3dff 55%,#ff8a3d);
+    box-shadow:0 6px 18px -6px rgba(255,45,120,.7);
+  }
+  .p-info{min-width:0; flex:0 1 220px}
+  .p-titulo{
+    font-size:14px; font-weight:600; white-space:nowrap;
+    overflow:hidden; text-overflow:ellipsis;
+  }
+  .p-artista{font-size:12px; color:var(--suave); margin-top:2px}
+  .p-play{
+    width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;flex:none;
+    background:#fff; color:#000; font-size:15px; display:grid;place-items:center;
+    transition:.2s;
+  }
+  .p-play:hover{transform:scale(1.06)}
+  .p-barra{display:flex; align-items:center; gap:10px; flex:1; min-width:0}
+  .p-barra span{font-size:11px; color:var(--suave); font-variant-numeric:tabular-nums; min-width:34px}
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; flex:1; height:4px; border-radius:4px;
+    background:rgba(255,255,255,.16); cursor:pointer; outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:12px;height:12px;border-radius:50%;
+    background:#fff; box-shadow:0 0 10px rgba(255,45,120,.9);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:12px;height:12px;border:none;border-radius:50%;background:#fff;
+  }
+  @media(max-width:680px){
+    .p-barra{display:none}
+    .p-info{flex:1}
+  }
+  .aviso{
+    position:fixed; bottom:96px; left:50%; transform:translate(-50%,16px);
+    background:rgba(255,255,255,.1); backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.14);
+    padding:10px 18px; border-radius:999px; font-size:13px; z-index:60;
+    opacity:0; pointer-events:none; transition:.3s;
+  }
+  .aviso.visible{opacity:1; transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<div class="fondo"><span class="f1"></span><span class="f2"></span><span class="f3"></span></div>
+
+<header class="hero">
+  <div class="portada">
+    <div class="capa c1"></div>
+    <div class="capa c2"></div>
+    <div class="capa c3"></div>
+    <div class="grano"></div>
+    <div class="portada-texto">
+      <h1>3 Días</h1>
+      <p>Enrique</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="tipo">Álbum</div>
+    <h2>3 Días</h2>
+    <div class="artista">Enrique</div>
+    <div class="meta">
+      <span>2026</span>
+      <span>12 canciones</span>
+      <span>Español</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="seccion-titulo">Sobre el álbum</div>
+  <div class="sobre">
+    [Aquí va el texto que explique de qué trata "3 Días" como álbum: el concepto, la historia, el porqué del título. Cuando me lo pases, lo reemplazo.]
+  </div>
+
+  <div class="seccion-titulo">Tracklist</div>
+  <div id="lista"></div>
+</main>
+
+<div class="aviso" id="aviso">Esta canción todavía no tiene audio.</div>
+
+<div class="player">
+  <div class="p-portada"></div>
+  <div class="p-info">
+    <div class="p-titulo" id="p-titulo">Sin reproducir</div>
+    <div class="p-artista" id="p-artista">Enrique · 3 Días</div>
+  </div>
+  <button class="p-play" id="p-play" aria-label="Reproducir">▶</button>
+  <div class="p-barra">
+    <span id="p-actual">0:00</span>
+    <input type="range" id="p-progreso" min="0" max="100" value="0" step="0.1" />
+    <span id="p-total">0:00</span>
+  </div>
+</div>
+
+<audio id="audio" preload="metadata"></audio>
+
+<script>
+const CANCIONES = [
+  { n:1,  titulo:"Canción 1",  dur:"3:24", audio:"",
+    significado:"[Aquí va el significado de la canción 1.]",
+    letra:"[Aquí va la letra de la canción 1.]" },
+  { n:2,  titulo:"Canción 2",  dur:"2:58", audio:"",
+    significado:"[Aquí va el significado de la canción 2.]",
+    letra:"[Aquí va la letra de la canción 2.]" },
+  { n:3,  titulo:"Canción 3",  dur:"3:41", audio:"",
+    significado:"[Aquí va el significado de la canción 3.]",
+    letra:"[Aquí va la letra de la canción 3.]" },
+  { n:4,  titulo:"Canción 4",  dur:"3:12", audio:"",
+    significado:"[Aquí va el significado de la canción 4.]",
+    letra:"[Aquí va la letra de la canción 4.]" },
+  { n:5,  titulo:"Canción 5",  dur:"4:05", audio:"",
+    significado:"[Aquí va el significado de la canción 5.]",
+    letra:"[Aquí va la letra de la canción 5.]" },
+  { n:6,  titulo:"Canción 6",  dur:"3:33", audio:"",
+    significado:"[Aquí va el significado de la canción 6.]",
+    letra:"[Aquí va la letra de la canción 6.]" },
+  { n:7,  titulo:"Canción 7",  dur:"2:47", audio:"",
+    significado:"[Aquí va el significado de la canción 7.]",
+    letra:"[Aquí va la letra de la canción 7.]" },
+  { n:8,  titulo:"Canción 8",  dur:"3:19", audio:"",
+    significado:"[Aquí va el significado de la canción 8.]",
+    letra:"[Aquí va la letra de la canción 8.]" },
+  { n:9,  titulo:"Canción 9",  dur:"3:56", audio:"",
+    significado:"[Aquí va el significado de la canción 9.]",
+    letra:"[Aquí va la letra de la canción 9.]" },
+  { n:10, titulo:"Canción 10", dur:"3:08", audio:"",
+    significado:"[Aquí va el significado de la canción 10.]",
+    letra:"[Aquí va la letra de la canción 10.]" },
+  { n:11, titulo:"Canción 11", dur:"4:22", audio:"",
+    significado:"[Aquí va el significado de la canción 11.]",
+    letra:"[Aquí va la letra de la canción 11.]" },
+  { n:12, titulo:"Canción 12", dur:"5:01", audio:"",
+    significado:"[Aquí va el significado de la canción 12.]",
+    letra:"[Aquí va la letra de la canción 12.]" }
+];
+
+const audio   = document.getElementById('audio');
+const lista   = document.getElementById('lista');
+const pTitulo = document.getElementById('p-titulo');
+const pArtista= document.getElementById('p-artista');
+const pPlay   = document.getElementById('p-play');
+const pProg   = document.getElementById('p-progreso');
+const pActual = document.getElementById('p-actual');
+const pTotal  = document.getElementById('p-total');
+const aviso   = document.getElementById('aviso');
+let actual = null;
+
+function tiempo(s){
+  if(!isFinite(s)) return '0:00';
+  const m = Math.floor(s/60), r = Math.floor(s%60);
+  return m + ':' + String(r).padStart(2,'0');
+}
+
+function mostrarAviso(txt){
+  aviso.textContent = txt;
+  aviso.classList.add('visible');
+  clearTimeout(aviso._t);
+  aviso._t = setTimeout(()=>aviso.classList.remove('visible'), 2200);
+}
+
+function pintar(){
+  lista.innerHTML = CANCIONES.map(c => `
+    <article class="track" data-n="${c.n}">
+      <div class="fila">
+        <span class="num">${String(c.n).padStart(2,'0')}</span>
+        <button class="mini-play" data-play="${c.n}" aria-label="Reproducir ${c.titulo}">▶</button>
+        <span class="titulo">${c.titulo}</span>
+        <span class="dur">${c.dur}</span>
+        <span class="chev">⌄</span>
+      </div>
+      <div class="detalle">
+        <div class="detalle-in">
+          <div class="detalle-caja">
+            <div class="bloque">
+              <h4>Significado</h4>
+              <p>${c.significado}</p>
+            </div>
+            <div class="bloque">
+              <h4>Letra</h4>
+              <p class="letra">${c.letra}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+lista.addEventListener('click', e => {
+  const btn = e.target.closest('[data-play]');
+  if(btn){
+    e.stopPropagation();
+    reproducir(Number(btn.dataset.play));
+    return;
+  }
+  const fila = e.target.closest('.fila');
+  if(fila){
+    fila.parentElement.classList.toggle('abierta');
+  }
+});
+
+function marcarSonando(n){
+  document.querySelectorAll('.track').forEach(t=>{
+    const on = Number(t.dataset.n) === n;
+    t.classList.toggle('sonando', on);
+    const b = t.querySelector('.mini-play');
+    if(b) b.textContent = on ? '❚❚' : '▶';
+  });
+}
+
+function reproducir(n){
+  const c = CANCIONES.find(x => x.n === n);
+  if(!c) return;
+  if(actual === n && !audio.paused){
+    audio.pause();
+    pPlay.textContent = '▶';
+    return;
+  }
+  if(!c.audio){
+    mostrarAviso('"' + c.titulo + '" todavía no tiene audio.');
+    return;
+  }
+  if(actual !== n){
+    actual = n;
+    audio.src = c.audio;
+    pTitulo.textContent = c.titulo;
+    pArtista.textContent = 'Enrique · 3 Días';
+    marcarSonando(n);
+  }
+  audio.play().then(()=>{
+    pPlay.textContent = '❚❚';
+  }).catch(()=>{
+    mostrarAviso('No se pudo reproducir el audio.');
+  });
+}
+
+pPlay.addEventListener('click', ()=>{
+  if(!audio.src){
+    mostrarAviso('Elige una canción del tracklist.');
+    return;
+  }
+  if(audio.paused){
+    audio.play();
+    pPlay.textContent = '❚❚';
+  } else {
+    audio.pause();
+    pPlay.textContent = '▶';
+  }
+});
+
+audio.addEventListener('timeupdate', ()=>{
+  pActual.textContent = tiempo(audio.currentTime);
+  if(audio.duration){
+    pProg.value = (audio.currentTime / audio.duration) * 100;
+  }
+});
+audio.addEventListener('loadedmetadata', ()=>{
+  pTotal.textContent = tiempo(audio.duration);
+});
+audio.addEventListener('ended', ()=>{
+  pPlay.textContent = '▶';
+  pProg.value = 0;
+  const sig = CANCIONES.find(c => c.n === (actual||0) + 1);
+  if(sig && sig.audio) reproducir(sig.n);
+  else marcarSonando(null);
+});
+
+pProg.addEventListener('input', ()=>{
+  if(audio.duration){
+    audio.currentTime = (pProg.value / 100) * audio.duration;
+  }
+});
+
+pintar();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+  </html>
