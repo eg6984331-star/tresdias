@@ -1,0 +1,15 @@
+{
+  "name": "3 Días — Enrique",
+  "short_name": "3 Días",
+  "description": "El álbum 3 Días de Enrique: significado y letra de cada canción.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08080c",
+  "theme_color": "#08080c",
+  "lang": "es",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
