@@ -34,27 +34,33 @@
     max-width:600px; margin:0 auto; padding:30px 20px 10px;
     display:flex; flex-direction:column; align-items:center; text-align:center;
   }
+  
+  /* PORTADA PRINCIPAL */
   .portada{
     width:100%; max-width:320px; aspect-ratio:1/1; border-radius:16px; overflow:hidden;
-    background:linear-gradient(135deg, #ff8a3d, #ff2d78, #5b3dff);
+    background: url('portada.jpg') center/cover no-repeat, #101018; 
     box-shadow:0 20px 40px -10px rgba(255,45,120,.3);
     position:relative;
   }
+  /* Efecto de brillo animado sobre la portada */
   .portada::after {
     content:''; position:absolute; inset:-50%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 60%);
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 60%);
     animation: rotar 10s linear infinite;
   }
   @keyframes rotar { 100% { transform: rotate(360deg); } }
+
   .hero h1{ font-size:32px; font-weight:800; letter-spacing:-.03em; margin-top:24px; }
   .hero .artista{ font-size:18px; color:var(--acento); margin-top:4px; font-weight:500; }
   .hero .meta{ font-size:13px; color:var(--suave); margin-top:12px; }
+  
   .btn-play-principal{
     margin-top:20px; background:#fff; color:#000; border:none; border-radius:999px;
-    padding:12px 40px; font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px;
+    padding:12px 30px; font-size:16px; font-weight:700; display:flex; align-items:center; gap:10px;
     cursor:pointer; transition:transform 0.2s;
   }
   .btn-play-principal:active{ transform:scale(0.95); }
+  
   .sobre-album {
     max-width:600px; margin: 20px auto; padding: 0 20px;
     font-size: 14px; line-height: 1.6; color: #d1c8c5; text-align: justify;
@@ -79,6 +85,7 @@
   .ecualizador span:nth-child(2) { height:50%; animation-delay:0.3s; }
   .ecualizador span:nth-child(3) { height:75%; animation-delay:0.2s; }
   @keyframes eq { 0%,100% { height:20%; } 50% { height:100%; } }
+  
   .mini-player{
     position:fixed; left:12px; right:12px; bottom:70px; z-index:90;
     background:rgba(40, 20, 15, 0.95); backdrop-filter:blur(20px);
@@ -87,12 +94,20 @@
     transform:translateY(150%); transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   .mini-player.visible { transform:translateY(0); }
-  .mini-portada{ width:40px; height:40px; border-radius:8px; background:linear-gradient(135deg, #ff8a3d, #ff2d78); flex:none; }
+  
+  /* MINI PORTADA */
+  .mini-portada{ 
+    width:40px; height:40px; border-radius:8px; 
+    background: url('portada.jpg') center/cover no-repeat, #101018; 
+    flex:none; 
+  }
+  
   .mini-info{ flex:1; min-width:0; overflow:hidden; }
   .mini-titulo{ font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .mini-artista{ font-size:12px; color:var(--suave); }
   .mini-controles{ display:flex; align-items:center; gap:12px; }
   .mini-btn{ background:none; border:none; color:#fff; font-size:18px; cursor:pointer; padding:4px; }
+  
   .full-player{
     position:fixed; inset:0; z-index:100;
     background:linear-gradient(180deg, #2a1105 0%, #120805 100%);
@@ -106,11 +121,15 @@
     border:none; color:#fff; width:36px; height:36px; border-radius:50%;
     display:grid; place-items:center; font-size:18px; cursor:pointer;
   }
+  
+  /* FULL PORTADA (PANTALLA COMPLETA) */
   .full-portada{
     width:85vw; max-width:350px; aspect-ratio:1/1; border-radius:12px;
-    background:linear-gradient(135deg, #ff8a3d, #ff2d78, #5b3dff); margin-top:40px;
+    background: url('portada.jpg') center/cover no-repeat, #101018; 
+    margin-top:40px;
     box-shadow:0 20px 50px rgba(0,0,0,0.5);
   }
+  
   .full-titulo{ font-size:24px; font-weight:800; margin-top:30px; text-align:center; }
   .full-artista{ font-size:18px; color:var(--suave); margin-top:4px; }
   .full-letra-container {
@@ -121,7 +140,7 @@
   }
   .full-letra {
     text-align:center; font-size:18px; line-height:1.8; font-weight:600; color:#d1c8c5;
-    white-space:pre-line;
+    white-space: pre-line;
   }
   .progreso-container { width:100%; max-width:400px; margin-bottom:20px; }
   .tiempos { display:flex; justify-content:space-between; font-size:12px; color:var(--suave); margin-bottom:8px; }
@@ -148,9 +167,10 @@
   <h1>3 Días</h1>
   <div class="artista">Enrique</div>
   <div class="meta">Álbum • 2026 • 12 Pistas</div>
-  <button class="btn-play-principal" onclick="reproducir(1)">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-    Reproducir
+  
+  <button class="btn-play-principal" id="main-play-btn" onclick="toggleMainPlay()">
+    <span id="main-play-icon">▶</span>
+    <span id="main-play-text">Reproducir</span>
   </button>
 </header>
 
@@ -179,15 +199,12 @@ Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su mo
 <!-- REPRODUCTOR PANTALLA COMPLETA -->
 <div class="full-player" id="full-player">
   <button class="close-btn" onclick="cerrarFullPlayer()">⌄</button>
-  
   <div class="full-portada"></div>
   <div class="full-titulo" id="full-titulo">Canción</div>
   <div class="full-artista">Enrique</div>
-
   <div class="full-letra-container" id="full-letra-container">
     <div class="full-letra" id="full-letra">Selecciona una canción para ver la letra...</div>
   </div>
-
   <div class="progreso-container">
     <div class="tiempos">
       <span id="tiempo-actual">0:00</span>
@@ -197,7 +214,6 @@ Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su mo
       <div class="barra-progreso-actual" id="barra-progreso-actual"></div>
     </div>
   </div>
-
   <div class="controles-full">
     <button class="btn-control">⏮</button>
     <button class="btn-control play-pause" id="btn-full-play" onclick="togglePlay(event)">▶</button>
@@ -228,9 +244,6 @@ Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su mo
 <audio id="audio" preload="metadata"></audio>
 
 <script>
-/* ============================================================
-   TUS DATOS AQUÍ CON AUDIOS CONECTADOS
-   ============================================================ */
 const CANCIONES = [
   { n:1,  titulo:"Una Vida", dur:"2:24", audio:"unavida.mp3", letra:"Letra próximamente..." },
   { n:2,  titulo:"OJITOS DE MIEL", dur:"4:19", audio:"ojitosdemiel.mp3", letra:"Letra próximamente..." },
@@ -246,7 +259,6 @@ const CANCIONES = [
   { n:12, titulo:"BONUS TRACK", dur:"1:38", audio:"bonustrack.mp3", letra:"Letra próximamente..." }
 ];
 
-/* LOGICA DE LA APP */
 const audio = document.getElementById('audio');
 const lista = document.getElementById('lista');
 const miniPlayer = document.getElementById('mini-player');
@@ -260,6 +272,10 @@ const btnFullPlay = document.getElementById('btn-full-play');
 const barraProgreso = document.getElementById('barra-progreso-actual');
 const tiempoActual = document.getElementById('tiempo-actual');
 const tiempoTotal = document.getElementById('tiempo-total');
+
+const mainPlayBtn = document.getElementById('main-play-btn');
+const mainPlayIcon = document.getElementById('main-play-icon');
+const mainPlayText = document.getElementById('main-play-text');
 
 let actual = null;
 
@@ -302,8 +318,7 @@ function reproducir(n) {
     audio.play().then(()=>{
       actualizarBotonPlay(true);
     }).catch(()=>{
-      // Si el archivo no existe o falla la red
-      console.log("Error al reproducir, verifica el nombre del archivo");
+      console.log("Error al reproducir");
       actualizarBotonPlay(false);
     });
     tiempoActual.textContent = "0:00";
@@ -311,6 +326,18 @@ function reproducir(n) {
     barraProgreso.style.width = "0%";
   } else {
     togglePlay();
+  }
+}
+
+function toggleMainPlay() {
+  if (actual === null) {
+    reproducir(1);
+  } else if (audio.paused) {
+    audio.play();
+    actualizarBotonPlay(true);
+  } else {
+    audio.pause();
+    actualizarBotonPlay(false);
   }
 }
 
@@ -330,6 +357,14 @@ function togglePlay(e) {
 function actualizarBotonPlay(reproduciendo) {
   miniBtnPlay.textContent = reproduciendo ? '❚❚' : '▶';
   btnFullPlay.textContent = reproduciendo ? '❚❚' : '▶';
+
+  if (reproduciendo) {
+    mainPlayIcon.textContent = '❚❚';
+    mainPlayText.textContent = 'Pausar';
+  } else {
+    mainPlayIcon.textContent = '▶';
+    mainPlayText.textContent = 'Reproducir';
+  }
 }
 
 function abrirFullPlayer() {
@@ -357,7 +392,12 @@ audio.addEventListener('loadedmetadata', () => {
 audio.addEventListener('ended', () => {
   actualizarBotonPlay(false);
   barraProgreso.style.width = '0%';
-  if (actual < 12) reproducir(actual + 1);
+  if (actual < 12) {
+    reproducir(actual + 1);
+  } else {
+    document.querySelectorAll('.track').forEach(t => t.classList.remove('sonando'));
+    actual = null;
+  }
 });
 
 function saltarAudio(e) {
@@ -371,4 +411,4 @@ function saltarAudio(e) {
 pintarLista();
 </script>
 </body>
-</html> 
+ </html>
