@@ -1,4 +1,4 @@
-const CACHE = 'tresdias-v2';
+const CACHE = 'tresdias-v3';
 const APP_SHELL = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {
