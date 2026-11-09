@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>3 Días — Enrique</title>
-<meta name="theme-color" content="#08080c" />
+<meta name="theme-color" content="#120805" />
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg">
 <link rel="apple-touch-icon" href="icon.svg">
@@ -14,10 +14,10 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --fondo:#08080c;
-    --texto:#f2f2f7;
-    --suave:#8e8e9c;
-    --acento:#ff2d78;
+    --fondo:#120805; /* Fondo oscuro cálido */
+    --texto:#ffffff;
+    --suave:#a39894;
+    --acento:#ff6b35; /* Naranja fuego */
     --linea:rgba(255,255,255,.08);
   }
   html{scroll-behavior:smooth}
@@ -27,422 +27,405 @@
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
-    padding-bottom:130px;
+    padding-bottom:140px; /* Espacio para el mini-reproductor y nav */
     overflow-x:hidden;
+    transition: background 0.3s;
   }
-  .fondo{position:fixed; inset:0; z-index:-1; overflow:hidden;}
-  .fondo span{position:absolute; border-radius:50%; filter:blur(90px); opacity:.35;}
-  .fondo .f1{width:55vw;height:55vw;left:-15vw;top:-15vw;background:#ff2d78;animation:flota 22s ease-in-out infinite}
-  .fondo .f2{width:50vw;height:50vw;right:-12vw;top:10vh;background:#5b3dff;animation:flota 28s ease-in-out infinite reverse}
-  .fondo .f3{width:45vw;height:45vw;left:25vw;bottom:-20vw;background:#ff8a3d;animation:flota 32s ease-in-out infinite}
-  @keyframes flota{
-    0%,100%{transform:translate(0,0) scale(1)}
-    50%{transform:translate(6vw,-4vh) scale(1.2)}
-  }
+
+  /* ---------- HERO (PORTADA Y TÍTULO) ---------- */
   .hero{
-    max-width:1100px; margin:0 auto; padding:56px 22px 24px;
-    display:grid; grid-template-columns:300px 1fr; gap:44px; align-items:end;
+    max-width:600px; margin:0 auto; padding:30px 20px 10px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
   }
-  @media(max-width:760px){
-    .hero{grid-template-columns:1fr; gap:26px; padding-top:34px; text-align:center}
-    .hero .meta{justify-content:center}
-    .portada{max-width:280px; margin:0 auto}
-  }
+  
   .portada{
-    position:relative; aspect-ratio:1/1; border-radius:22px; overflow:hidden;
-    background:#101018;
-    box-shadow:0 40px 80px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.06) inset;
-    animation:respira 8s ease-in-out infinite;
+    width:100%; max-width:320px; aspect-ratio:1/1; border-radius:16px; overflow:hidden;
+    background:linear-gradient(135deg, #ff8a3d, #ff2d78, #5b3dff); /* Gradiente temporal */
+    box-shadow:0 20px 40px -10px rgba(255,45,120,.3);
+    position:relative;
   }
-  @keyframes respira{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
-  .capa{position:absolute; inset:-40%; filter:blur(48px)}
-  .c1{
-    background:
-      radial-gradient(circle at 30% 30%, #ff8a3d 0%, transparent 55%),
-      radial-gradient(circle at 72% 62%, #ff2d78 0%, transparent 58%);
-    animation:mueve1 16s ease-in-out infinite;
+  /* Efecto de movimiento suave en la portada */
+  .portada::after {
+    content:''; position:absolute; inset:-50%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 60%);
+    animation: rotar 10s linear infinite;
   }
-  .c2{
-    background:
-      radial-gradient(circle at 70% 25%, #5b3dff 0%, transparent 55%),
-      radial-gradient(circle at 25% 75%, #00d4ff 0%, transparent 55%);
-    animation:mueve2 20s ease-in-out infinite;
-    opacity:.9;
-  }
-  .c3{
-    background:radial-gradient(circle at 50% 50%, #ffe45e 0%, transparent 45%);
-    opacity:.5; animation:mueve3 12s ease-in-out infinite;
-  }
-  @keyframes mueve1{0%,100%{transform:translate(-6%,-4%) rotate(0)}50%{transform:translate(8%,7%) rotate(14deg)}}
-  @keyframes mueve2{0%,100%{transform:translate(5%,6%) rotate(0)}50%{transform:translate(-7%,-8%) rotate(-12deg)}}
-  @keyframes mueve3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10%,8%) scale(1.3)}}
-  .grano{
-    position:absolute; inset:0; pointer-events:none; opacity:.22; mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
-  }
-  .portada-texto{
-    position:absolute; inset:0; display:flex; flex-direction:column;
-    justify-content:flex-end; padding:22px; z-index:3;
-  }
-  .portada-texto h1{
-    font-size:clamp(34px,6vw,46px); font-weight:800; letter-spacing:-.04em;
-    line-height:.95; text-shadow:0 4px 30px rgba(0,0,0,.5);
-  }
-  .portada-texto p{
-    font-size:13px; letter-spacing:.28em; text-transform:uppercase;
-    opacity:.8; margin-top:8px; font-weight:600;
-  }
-  .tipo{
-    font-size:12px; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--acento); font-weight:700; margin-bottom:12px;
-  }
-  .hero h2{
-    font-size:clamp(38px,7vw,64px); font-weight:800; letter-spacing:-.04em; line-height:1;
+  @keyframes rotar { 100% { transform: rotate(360deg); } }
+
+  .hero h1{
+    font-size:32px; font-weight:800; letter-spacing:-.03em; margin-top:24px;
   }
   .hero .artista{
-    font-size:20px; color:var(--suave); margin-top:10px; font-weight:500;
+    font-size:18px; color:var(--acento); margin-top:4px; font-weight:500;
   }
-  .meta{
-    display:flex; flex-wrap:wrap; gap:14px; margin-top:18px;
-    font-size:13px; color:var(--suave);
+  .hero .meta{
+    font-size:13px; color:var(--suave); margin-top:12px;
   }
-  .meta span{display:flex; align-items:center; gap:6px}
-  .meta span::before{content:"•"; color:var(--acento)}
-  .meta span:first-child::before{display:none}
-  main{max-width:1100px; margin:0 auto; padding:30px 22px 40px}
-  .seccion-titulo{
-    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--suave); font-weight:700; margin:34px 0 14px;
+
+  /* Botón de Reproducir principal */
+  .btn-play-principal{
+    margin-top:20px; background:#fff; color:#000; border:none; border-radius:999px;
+    padding:12px 40px; font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px;
+    cursor:pointer; transition:transform 0.2s;
   }
-  .sobre{
-    background:rgba(255,255,255,.03); border:1px solid var(--linea);
-    border-radius:18px; padding:24px; line-height:1.7; color:#c9c9d4;
-    font-size:15px;
+  .btn-play-principal:active{ transform:scale(0.95); }
+  
+  /* ---------- SOBRE EL ÁLBUM ---------- */
+  .sobre-album {
+    max-width:600px; margin: 20px auto; padding: 0 20px;
+    font-size: 14px; line-height: 1.6; color: #d1c8c5; text-align: justify;
+    white-space: pre-line;
   }
-  .track{border-bottom:1px solid var(--linea); transition:background .2s;}
-  .track:hover{background:rgba(255,255,255,.025)}
-  .fila{
-    display:grid; grid-template-columns:34px 34px 1fr auto 26px;
-    align-items:center; gap:12px; padding:14px 8px; cursor:pointer;
+
+  /* ---------- TRACKLIST ---------- */
+  .lista-canciones { max-width:600px; margin: 20px auto; padding: 0 10px; }
+  .track{
+    display:flex; align-items:center; gap:16px; padding:12px 10px;
+    border-bottom:1px solid var(--linea); cursor:pointer; transition:background 0.2s;
   }
-  .num{font-size:13px; color:var(--suave); font-variant-numeric:tabular-nums}
-  .mini-play{
-    width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
-    background:rgba(255,255,255,.08); color:#fff; font-size:11px;
-    display:grid;place-items:center; transition:.2s; flex:none;
+  .track:active{ background:rgba(255,255,255,.05); }
+  .num{ font-size:14px; color:var(--suave); width:20px; text-align:center; }
+  .info-track{ flex:1; min-width:0; }
+  .titulo{ font-size:16px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .artista-track{ font-size:13px; color:var(--suave); margin-top:2px; }
+  .dur{ font-size:14px; color:var(--suave); font-variant-numeric:tabular-nums; }
+  
+  /* Icono de ecualizador animado para la canción sonando */
+  .track.sonando .num { display: none; }
+  .ecualizador { display:none; width:20px; justify-content:space-between; align-items:flex-end; height:14px; }
+  .track.sonando .ecualizador { display:flex; }
+  .ecualizador span { width:3px; background:var(--acento); animation:eq 1s ease-in-out infinite; border-radius:2px; }
+  .ecualizador span:nth-child(1) { height:100%; animation-delay:0.1s; }
+  .ecualizador span:nth-child(2) { height:50%; animation-delay:0.3s; }
+  .ecualizador span:nth-child(3) { height:75%; animation-delay:0.2s; }
+  @keyframes eq { 0%,100% { height:20%; } 50% { height:100%; } }
+
+  /* ---------- MINI REPRODUCTOR ---------- */
+  .mini-player{
+    position:fixed; left:12px; right:12px; bottom:70px; z-index:90;
+    background:rgba(40, 20, 15, 0.95); backdrop-filter:blur(20px);
+    border-radius:16px; padding:10px; display:flex; align-items:center; gap:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5); cursor:pointer;
+    transform:translateY(150%); transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .mini-play:hover{background:var(--acento); transform:scale(1.08)}
-  .track.sonando .mini-play{background:var(--acento)}
-  .track.sonando .num{color:var(--acento)}
-  .titulo{font-size:16px; font-weight:600; letter-spacing:-.01em}
-  .dur{font-size:13px; color:var(--suave); font-variant-numeric:tabular-nums}
-  .chev{font-size:14px; color:var(--suave); transition:transform .3s}
-  .track.abierta .chev{transform:rotate(180deg)}
-  .detalle{display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease}
-  .track.abierta .detalle{grid-template-rows:1fr}
-  .detalle-in{overflow:hidden}
-  .detalle-caja{padding:4px 8px 26px 80px}
-  @media(max-width:600px){.detalle-caja{padding-left:8px}}
-  .bloque{margin-top:20px}
-  .bloque h4{
-    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--acento); margin-bottom:8px; font-weight:700;
+  .mini-player.visible { transform:translateY(0); }
+  .mini-portada{ width:40px; height:40px; border-radius:8px; background:linear-gradient(135deg, #ff8a3d, #ff2d78); flex:none; }
+  .mini-info{ flex:1; min-width:0; overflow:hidden; }
+  .mini-titulo{ font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mini-artista{ font-size:12px; color:var(--suave); }
+  .mini-controles{ display:flex; align-items:center; gap:12px; }
+  .mini-btn{ background:none; border:none; color:#fff; font-size:18px; cursor:pointer; padding:4px; }
+
+  /* ---------- REPRODUCTOR PANTALLA COMPLETA ---------- */
+  .full-player{
+    position:fixed; inset:0; z-index:100;
+    background:linear-gradient(180deg, #2a1105 0%, #120805 100%);
+    display:flex; flex-direction:column; align-items:center; padding:40px 20px;
+    transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow-y:auto;
   }
-  .bloque p{font-size:15px; line-height:1.75; color:#c9c9d4}
-  .letra{white-space:pre-line; color:#a9a9b8 !important; font-size:14px !important}
-  .player{
-    position:fixed; left:0; right:0; bottom:0; z-index:50;
-    display:flex; align-items:center; gap:16px;
-    padding:12px 22px;
-    background:rgba(14,14,20,.82);
-    backdrop-filter:blur(24px) saturate(180%);
-    -webkit-backdrop-filter:blur(24px) saturate(180%);
-    border-top:1px solid rgba(255,255,255,.09);
+  .full-player.visible { transform:translateY(0); }
+  
+  .close-btn{
+    position:absolute; top:20px; left:20px; background:rgba(255,255,255,0.1);
+    border:none; color:#fff; width:36px; height:36px; border-radius:50%;
+    display:grid; place-items:center; font-size:18px; cursor:pointer;
   }
-  .p-portada{
-    width:48px;height:48px;border-radius:10px;flex:none;position:relative;overflow:hidden;
-    background:linear-gradient(135deg,#ff2d78,#5b3dff 55%,#ff8a3d);
-    box-shadow:0 6px 18px -6px rgba(255,45,120,.7);
+  .full-portada{
+    width:85vw; max-width:350px; aspect-ratio:1/1; border-radius:12px;
+    background:linear-gradient(135deg, #ff8a3d, #ff2d78, #5b3dff); margin-top:40px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
   }
-  .p-info{min-width:0; flex:0 1 220px}
-  .p-titulo{
-    font-size:14px; font-weight:600; white-space:nowrap;
-    overflow:hidden; text-overflow:ellipsis;
+  .full-titulo{ font-size:24px; font-weight:800; margin-top:30px; text-align:center; }
+  .full-artista{ font-size:18px; color:var(--suave); margin-top:4px; }
+  
+  /* Letra scrolleable */
+  .full-letra-container {
+    width:100%; max-width:400px; margin:30px 0; flex:1;
+    overflow-y:auto; mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    padding: 20px 0;
   }
-  .p-artista{font-size:12px; color:var(--suave); margin-top:2px}
-  .p-play{
-    width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;flex:none;
-    background:#fff; color:#000; font-size:15px; display:grid;place-items:center;
-    transition:.2s;
+  .full-letra {
+    text-align:center; font-size:18px; line-height:1.8; font-weight:600; color:#d1c8c5;
+    white-space:pre-line;
   }
-  .p-play:hover{transform:scale(1.06)}
-  .p-barra{display:flex; align-items:center; gap:10px; flex:1; min-width:0}
-  .p-barra span{font-size:11px; color:var(--suave); font-variant-numeric:tabular-nums; min-width:34px}
-  input[type=range]{
-    -webkit-appearance:none; appearance:none; flex:1; height:4px; border-radius:4px;
-    background:rgba(255,255,255,.16); cursor:pointer; outline:none;
+
+  /* Controles inferiores */
+  .progreso-container { width:100%; max-width:400px; margin-bottom:20px; }
+  .tiempos { display:flex; justify-content:space-between; font-size:12px; color:var(--suave); margin-bottom:8px; }
+  .barra-progreso { width:100%; height:6px; background:rgba(255,255,255,0.2); border-radius:4px; position:relative; cursor:pointer; }
+  .barra-progreso-actual { height:100%; background:#fff; border-radius:4px; width:0%; pointer-events:none; }
+  
+  .controles-full { display:flex; align-items:center; justify-content:center; gap:30px; margin-bottom:30px; width:100%; }
+  .btn-control { background:none; border:none; color:#fff; font-size:24px; cursor:pointer; }
+  .btn-control.play-pause { font-size:40px; }
+
+  /* ---------- BARRA DE NAVEGACIÓN INFERIOR ---------- */
+  .bottom-nav{
+    position:fixed; bottom:0; left:0; right:0; height:60px; z-index:80;
+    background:rgba(18,8,5,0.9); backdrop-filter:blur(20px);
+    display:flex; justify-content:space-around; align-items:center;
+    border-top:1px solid var(--linea);
   }
-  input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none; width:12px;height:12px;border-radius:50%;
-    background:#fff; box-shadow:0 0 10px rgba(255,45,120,.9);
-  }
-  input[type=range]::-moz-range-thumb{
-    width:12px;height:12px;border:none;border-radius:50%;background:#fff;
-  }
-  @media(max-width:680px){
-    .p-barra{display:none}
-    .p-info{flex:1}
-  }
-  .aviso{
-    position:fixed; bottom:96px; left:50%; transform:translate(-50%,16px);
-    background:rgba(255,255,255,.1); backdrop-filter:blur(16px);
-    border:1px solid rgba(255,255,255,.14);
-    padding:10px 18px; border-radius:999px; font-size:13px; z-index:60;
-    opacity:0; pointer-events:none; transition:.3s;
-  }
-  .aviso.visible{opacity:1; transform:translate(-50%,0)}
+  .nav-item{ display:flex; flex-direction:column; align-items:center; color:var(--suave); font-size:10px; gap:4px; cursor:pointer; }
+  .nav-item.activo { color:#fff; }
+  .nav-item svg { width:24px; height:24px; fill:currentColor; }
+
 </style>
 </head>
 <body>
 
-<div class="fondo"><span class="f1"></span><span class="f2"></span><span class="f3"></span></div>
-
 <header class="hero">
-  <div class="portada">
-    <div class="capa c1"></div>
-    <div class="capa c2"></div>
-    <div class="capa c3"></div>
-    <div class="grano"></div>
-    <div class="portada-texto">
-      <h1>3 Días</h1>
-      <p>Enrique</p>
-    </div>
-  </div>
-
-  <div>
-    <div class="tipo">Álbum</div>
-    <h2>3 Días</h2>
-    <div class="artista">Enrique</div>
-    <div class="meta">
-      <span>2026</span>
-      <span>12 canciones</span>
-      <span>Español</span>
-    </div>
-  </div>
+  <div class="portada"></div>
+  <h1>3 Días</h1>
+  <div class="artista">Enrique</div>
+  <div class="meta">Álbum • 2026 • 12 Pistas</div>
+  
+  <button class="btn-play-principal" onclick="reproducir(1)">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    Reproducir
+  </button>
 </header>
 
-<main>
-  <div class="seccion-titulo">Sobre el álbum</div>
-  <div class="sobre">
-    [Aquí va el texto que explique de qué trata "3 Días" como álbum: el concepto, la historia, el porqué del título. Cuando me lo pases, lo reemplazo.]
+<div class="sobre-album">
+Este pequeño detalle es para ti, me hiciste sentir cosas que fuck solo puedo describir en canciones, y por qué no en un álbum de 12 canciones en las cuales describo todo lo que siento y lo que lograste ser para mí.
+
+El título del álbum significa el días que me tomo saber más de ti, y la cantidad de días que logré en hablarte, y quiero decirte que aunque no logramos ser algo o lograr tener algo bonito créeme que me enamoré y que contigo conocí el amor a primera vista, y que gracias a ti volví a escribir canciones.
+
+Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su momento nunca fue intencionalmente, yo en verdad te quiero mucho, perdóname por no lograr cambiar.
+</div>
+
+<div class="lista-canciones" id="lista"></div>
+
+<!-- MINI REPRODUCTOR -->
+<div class="mini-player" id="mini-player" onclick="abrirFullPlayer()">
+  <div class="mini-portada"></div>
+  <div class="mini-info">
+    <div class="mini-titulo" id="mini-titulo">Selecciona una canción</div>
+    <div class="mini-artista">Enrique</div>
   </div>
-
-  <div class="seccion-titulo">Tracklist</div>
-  <div id="lista"></div>
-</main>
-
-<div class="aviso" id="aviso">Esta canción todavía no tiene audio.</div>
-
-<div class="player">
-  <div class="p-portada"></div>
-  <div class="p-info">
-    <div class="p-titulo" id="p-titulo">Sin reproducir</div>
-    <div class="p-artista" id="p-artista">Enrique · 3 Días</div>
-  </div>
-  <button class="p-play" id="p-play" aria-label="Reproducir">▶</button>
-  <div class="p-barra">
-    <span id="p-actual">0:00</span>
-    <input type="range" id="p-progreso" min="0" max="100" value="0" step="0.1" />
-    <span id="p-total">0:00</span>
+  <div class="mini-controles">
+    <button class="mini-btn" onclick="togglePlay(event)">▶</button>
   </div>
 </div>
+
+<!-- REPRODUCTOR PANTALLA COMPLETA -->
+<div class="full-player" id="full-player">
+  <button class="close-btn" onclick="cerrarFullPlayer()">⌄</button>
+  
+  <div class="full-portada"></div>
+  <div class="full-titulo" id="full-titulo">Canción</div>
+  <div class="full-artista">Enrique</div>
+
+  <!-- Letra -->
+  <div class="full-letra-container" id="full-letra-container">
+    <div class="full-letra" id="full-letra">Selecciona una canción para ver la letra...</div>
+  </div>
+
+  <!-- Progreso -->
+  <div class="progreso-container">
+    <div class="tiempos">
+      <span id="tiempo-actual">0:00</span>
+      <span id="tiempo-total">0:00</span>
+    </div>
+    <div class="barra-progreso" id="barra-progreso" onclick="saltarAudio(event)">
+      <div class="barra-progreso-actual" id="barra-progreso-actual"></div>
+    </div>
+  </div>
+
+  <!-- Controles -->
+  <div class="controles-full">
+    <button class="btn-control">⏮</button>
+    <button class="btn-control play-pause" id="btn-full-play" onclick="togglePlay(event)">▶</button>
+    <button class="btn-control">⏭</button>
+  </div>
+</div>
+
+<!-- NAV BAR INFERIOR -->
+<nav class="bottom-nav">
+  <div class="nav-item activo">
+    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Inicio
+  </div>
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+    Explorar
+  </div>
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 5h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S10 13.88 10 12.5s1.12-2.5 2.5-2.5c.57 0 1.08.19 1.5.51V5h4v2zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6z"/></svg>
+    Biblioteca
+  </div>
+  <div class="nav-item">
+    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    Buscar
+  </div>
+</nav>
 
 <audio id="audio" preload="metadata"></audio>
 
 <script>
+/* ============================================================
+   TUS DATOS AQUÍ
+   ============================================================ */
 const CANCIONES = [
-  { n:1,  titulo:"Canción 1",  dur:"3:24", audio:"",
-    significado:"[Aquí va el significado de la canción 1.]",
-    letra:"[Aquí va la letra de la canción 1.]" },
-  { n:2,  titulo:"Canción 2",  dur:"2:58", audio:"",
-    significado:"[Aquí va el significado de la canción 2.]",
-    letra:"[Aquí va la letra de la canción 2.]" },
-  { n:3,  titulo:"Canción 3",  dur:"3:41", audio:"",
-    significado:"[Aquí va el significado de la canción 3.]",
-    letra:"[Aquí va la letra de la canción 3.]" },
-  { n:4,  titulo:"Canción 4",  dur:"3:12", audio:"",
-    significado:"[Aquí va el significado de la canción 4.]",
-    letra:"[Aquí va la letra de la canción 4.]" },
-  { n:5,  titulo:"Canción 5",  dur:"4:05", audio:"",
-    significado:"[Aquí va el significado de la canción 5.]",
-    letra:"[Aquí va la letra de la canción 5.]" },
-  { n:6,  titulo:"Canción 6",  dur:"3:33", audio:"",
-    significado:"[Aquí va el significado de la canción 6.]",
-    letra:"[Aquí va la letra de la canción 6.]" },
-  { n:7,  titulo:"Canción 7",  dur:"2:47", audio:"",
-    significado:"[Aquí va el significado de la canción 7.]",
-    letra:"[Aquí va la letra de la canción 7.]" },
-  { n:8,  titulo:"Canción 8",  dur:"3:19", audio:"",
-    significado:"[Aquí va el significado de la canción 8.]",
-    letra:"[Aquí va la letra de la canción 8.]" },
-  { n:9,  titulo:"Canción 9",  dur:"3:56", audio:"",
-    significado:"[Aquí va el significado de la canción 9.]",
-    letra:"[Aquí va la letra de la canción 9.]" },
-  { n:10, titulo:"Canción 10", dur:"3:08", audio:"",
-    significado:"[Aquí va el significado de la canción 10.]",
-    letra:"[Aquí va la letra de la canción 10.]" },
-  { n:11, titulo:"Canción 11", dur:"4:22", audio:"",
-    significado:"[Aquí va el significado de la canción 11.]",
-    letra:"[Aquí va la letra de la canción 11.]" },
-  { n:12, titulo:"Canción 12", dur:"5:01", audio:"",
-    significado:"[Aquí va el significado de la canción 12.]",
-    letra:"[Aquí va la letra de la canción 12.]" }
+  { n:1, titulo:"Una Vida", dur:"2:24", audio:"",
+    letra:"Si te llevé a la luna ah-ah y no fue suficiente\nPensando si eres mía ah-ah no sales de mi mente\nSigo triste fumando imagina qué haría\nQue tus besos fueran toda mi compañía\nMami sabes contigo brillar como el día\n\nY en el humo del gallo entregarte una vida\nY en el humo del gallo entregarte una vida\nRecordar cuando nos veíamos a escondidas\n\nMami\nY es la N la A y la Z viejo\nEh\nJa-ja\n\nOlvidaría tu nombre eh-eh me acostumbré a tenerte\nCantando mis canciones eh-eh obligado a quererte\nQue en la noche me abrace el humo es medicina\nPorque el cora la mente tu voz me alucina ah-ah\nBaby sabes contigo digan lo que digan\nY en el humo si quieres te entrego una vida\nY en el humo si quieres te entrego una vida\nPasa el tiempo en mi pecho más grande la herida" },
+  { n:2, titulo:"Canción 2", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:3, titulo:"Canción 3", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:4, titulo:"Canción 4", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:5, titulo:"Canción 5", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:6, titulo:"Canción 6", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:7, titulo:"Canción 7", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:8, titulo:"Canción 8", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:9, titulo:"Canción 9", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:10, titulo:"Canción 10", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:11, titulo:"Canción 11", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
+  { n:12, titulo:"Canción 12", dur:"0:00", audio:"", letra:"[Letra pendiente]" }
 ];
 
-const audio   = document.getElementById('audio');
-const lista   = document.getElementById('lista');
-const pTitulo = document.getElementById('p-titulo');
-const pArtista= document.getElementById('p-artista');
-const pPlay   = document.getElementById('p-play');
-const pProg   = document.getElementById('p-progreso');
-const pActual = document.getElementById('p-actual');
-const pTotal  = document.getElementById('p-total');
-const aviso   = document.getElementById('aviso');
+/* LOGICA DE LA APP */
+const audio = document.getElementById('audio');
+const lista = document.getElementById('lista');
+const miniPlayer = document.getElementById('mini-player');
+const miniTitulo = document.getElementById('mini-titulo');
+const miniBtnPlay = document.querySelector('.mini-btn');
+const fullPlayer = document.getElementById('full-player');
+const fullTitulo = document.getElementById('full-titulo');
+const fullLetraContainer = document.getElementById('full-letra-container');
+const fullLetra = document.getElementById('full-letra');
+const btnFullPlay = document.getElementById('btn-full-play');
+const barraProgreso = document.getElementById('barra-progreso-actual');
+const tiempoActual = document.getElementById('tiempo-actual');
+const tiempoTotal = document.getElementById('tiempo-total');
+
 let actual = null;
 
-function tiempo(s){
+// Formatear tiempo
+function formatTiempo(s) {
   if(!isFinite(s)) return '0:00';
   const m = Math.floor(s/60), r = Math.floor(s%60);
   return m + ':' + String(r).padStart(2,'0');
 }
 
-function mostrarAviso(txt){
-  aviso.textContent = txt;
-  aviso.classList.add('visible');
-  clearTimeout(aviso._t);
-  aviso._t = setTimeout(()=>aviso.classList.remove('visible'), 2200);
-}
-
-function pintar(){
+// Pintar la lista
+function pintarLista() {
   lista.innerHTML = CANCIONES.map(c => `
-    <article class="track" data-n="${c.n}">
-      <div class="fila">
-        <span class="num">${String(c.n).padStart(2,'0')}</span>
-        <button class="mini-play" data-play="${c.n}" aria-label="Reproducir ${c.titulo}">▶</button>
-        <span class="titulo">${c.titulo}</span>
-        <span class="dur">${c.dur}</span>
-        <span class="chev">⌄</span>
+    <div class="track" data-n="${c.n}" onclick="reproducir(${c.n})">
+      <span class="num">${c.n}</span>
+      <div class="ecualizador"><span></span><span></span><span></span></div>
+      <div class="info-track">
+        <div class="titulo">${c.titulo}</div>
+        <div class="artista-track">Enrique</div>
       </div>
-      <div class="detalle">
-        <div class="detalle-in">
-          <div class="detalle-caja">
-            <div class="bloque">
-              <h4>Significado</h4>
-              <p>${c.significado}</p>
-            </div>
-            <div class="bloque">
-              <h4>Letra</h4>
-              <p class="letra">${c.letra}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
+      <span class="dur">${c.dur}</span>
+    </div>
   `).join('');
 }
 
-lista.addEventListener('click', e => {
-  const btn = e.target.closest('[data-play]');
-  if(btn){
-    e.stopPropagation();
-    reproducir(Number(btn.dataset.play));
-    return;
-  }
-  const fila = e.target.closest('.fila');
-  if(fila){
-    fila.parentElement.classList.toggle('abierta');
-  }
-});
-
-function marcarSonando(n){
-  document.querySelectorAll('.track').forEach(t=>{
-    const on = Number(t.dataset.n) === n;
-    t.classList.toggle('sonando', on);
-    const b = t.querySelector('.mini-play');
-    if(b) b.textContent = on ? '❚❚' : '▶';
-  });
-}
-
-function reproducir(n){
+// Reproducir canción
+function reproducir(n) {
   const c = CANCIONES.find(x => x.n === n);
   if(!c) return;
-  if(actual === n && !audio.paused){
-    audio.pause();
-    pPlay.textContent = '▶';
-    return;
-  }
-  if(!c.audio){
-    mostrarAviso('"' + c.titulo + '" todavía no tiene audio.');
-    return;
-  }
-  if(actual !== n){
+
+  // Actualizar UI de la lista
+  document.querySelectorAll('.track').forEach(t => t.classList.remove('sonando'));
+  const trackDom = document.querySelector(`.track[data-n="${n}"]`);
+  if(trackDom) trackDom.classList.add('sonando');
+
+  // Actualizar textos
+  miniTitulo.textContent = c.titulo;
+  fullTitulo.textContent = c.titulo;
+  fullLetra.textContent = c.letra;
+  
+  // Mostrar mini player
+  miniPlayer.classList.add('visible');
+
+  // Cargar audio (si tuviera)
+  if (actual !== n) {
     actual = n;
-    audio.src = c.audio;
-    pTitulo.textContent = c.titulo;
-    pArtista.textContent = 'Enrique · 3 Días';
-    marcarSonando(n);
+    if (c.audio) {
+      audio.src = c.audio;
+      audio.play().catch(()=>console.log("Sin audio aún"));
+      actualizarBotonPlay(true);
+    } else {
+      actualizarBotonPlay(false);
+      tiempoActual.textContent = "0:00";
+      tiempoTotal.textContent = c.dur;
+      barraProgreso.style.width = "0%";
+    }
+  } else {
+    // Si ya estaba seleccionada, solo alterna play/pause
+    if(c.audio) togglePlay();
   }
-  audio.play().then(()=>{
-    pPlay.textContent = '❚❚';
-  }).catch(()=>{
-    mostrarAviso('No se pudo reproducir el audio.');
-  });
 }
 
-pPlay.addEventListener('click', ()=>{
-  if(!audio.src){
-    mostrarAviso('Elige una canción del tracklist.');
+// Alternar Play/Pause
+function togglePlay(e) {
+  if(e) e.stopPropagation(); // Evitar que se abra el full player si tocas el play en el mini
+  if (!audio.src) {
+    // Si no hay audio real aún, solo simulamos
+    actualizarBotonPlay(audio.paused); 
     return;
   }
-  if(audio.paused){
+
+  if (audio.paused) {
     audio.play();
-    pPlay.textContent = '❚❚';
+    actualizarBotonPlay(true);
   } else {
     audio.pause();
-    pPlay.textContent = '▶';
+    actualizarBotonPlay(false);
   }
-});
-
-audio.addEventListener('timeupdate', ()=>{
-  pActual.textContent = tiempo(audio.currentTime);
-  if(audio.duration){
-    pProg.value = (audio.currentTime / audio.duration) * 100;
-  }
-});
-audio.addEventListener('loadedmetadata', ()=>{
-  pTotal.textContent = tiempo(audio.duration);
-});
-audio.addEventListener('ended', ()=>{
-  pPlay.textContent = '▶';
-  pProg.value = 0;
-  const sig = CANCIONES.find(c => c.n === (actual||0) + 1);
-  if(sig && sig.audio) reproducir(sig.n);
-  else marcarSonando(null);
-});
-
-pProg.addEventListener('input', ()=>{
-  if(audio.duration){
-    audio.currentTime = (pProg.value / 100) * audio.duration;
-  }
-});
-
-pintar();
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
 }
+
+// Actualizar iconos de play
+function actualizarBotonPlay(reproduciendo) {
+  miniBtnPlay.textContent = reproduciendo ? '❚❚' : '▶';
+  btnFullPlay.textContent = reproduciendo ? '❚❚' : '▶';
+}
+
+// Abrir full player
+function abrirFullPlayer() {
+  if (!actual) return;
+  fullPlayer.classList.add('visible');
+  fullLetraContainer.scrollTop = 0;
+}
+
+// Cerrar full player
+function cerrarFullPlayer() {
+  fullPlayer.classList.remove('visible');
+}
+
+// Progreso de la barra
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    const pct = (audio.currentTime / audio.duration) * 100;
+    barraProgreso.style.width = pct + '%';
+    tiempoActual.textContent = formatTiempo(audio.currentTime);
+  }
+});
+
+audio.addEventListener('loadedmetadata', () => {
+  tiempoTotal.textContent = formatTiempo(audio.duration);
+});
+
+audio.addEventListener('ended', () => {
+  actualizarBotonPlay(false);
+  barraProgreso.style.width = '0%';
+  // Pasar a la siguiente (opcional)
+  if (actual < 12) reproducir(actual + 1);
+});
+
+// Saltar audio
+function saltarAudio(e) {
+  if (!audio.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const pct = x / rect.width;
+  audio.currentTime = pct * audio.duration;
+}
+
+pintarLista();
 </script>
 </body>
-  </html>
+ </html>
