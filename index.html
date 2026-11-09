@@ -14,10 +14,10 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --fondo:#120805; /* Fondo oscuro cálido */
+    --fondo:#120805;
     --texto:#ffffff;
     --suave:#a39894;
-    --acento:#ff6b35; /* Naranja fuego */
+    --acento:#ff6b35;
     --linea:rgba(255,255,255,.08);
   }
   html{scroll-behavior:smooth}
@@ -27,57 +27,39 @@
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
-    padding-bottom:140px; /* Espacio para el mini-reproductor y nav */
+    padding-bottom:140px;
     overflow-x:hidden;
-    transition: background 0.3s;
   }
-
-  /* ---------- HERO (PORTADA Y TÍTULO) ---------- */
   .hero{
     max-width:600px; margin:0 auto; padding:30px 20px 10px;
     display:flex; flex-direction:column; align-items:center; text-align:center;
   }
-  
   .portada{
     width:100%; max-width:320px; aspect-ratio:1/1; border-radius:16px; overflow:hidden;
-    background:linear-gradient(135deg, #ff8a3d, #ff2d78, #5b3dff); /* Gradiente temporal */
+    background:linear-gradient(135deg, #ff8a3d, #ff2d78, #5b3dff);
     box-shadow:0 20px 40px -10px rgba(255,45,120,.3);
     position:relative;
   }
-  /* Efecto de movimiento suave en la portada */
   .portada::after {
     content:''; position:absolute; inset:-50%;
     background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, transparent 60%);
     animation: rotar 10s linear infinite;
   }
   @keyframes rotar { 100% { transform: rotate(360deg); } }
-
-  .hero h1{
-    font-size:32px; font-weight:800; letter-spacing:-.03em; margin-top:24px;
-  }
-  .hero .artista{
-    font-size:18px; color:var(--acento); margin-top:4px; font-weight:500;
-  }
-  .hero .meta{
-    font-size:13px; color:var(--suave); margin-top:12px;
-  }
-
-  /* Botón de Reproducir principal */
+  .hero h1{ font-size:32px; font-weight:800; letter-spacing:-.03em; margin-top:24px; }
+  .hero .artista{ font-size:18px; color:var(--acento); margin-top:4px; font-weight:500; }
+  .hero .meta{ font-size:13px; color:var(--suave); margin-top:12px; }
   .btn-play-principal{
     margin-top:20px; background:#fff; color:#000; border:none; border-radius:999px;
     padding:12px 40px; font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px;
     cursor:pointer; transition:transform 0.2s;
   }
   .btn-play-principal:active{ transform:scale(0.95); }
-  
-  /* ---------- SOBRE EL ÁLBUM ---------- */
   .sobre-album {
     max-width:600px; margin: 20px auto; padding: 0 20px;
     font-size: 14px; line-height: 1.6; color: #d1c8c5; text-align: justify;
     white-space: pre-line;
   }
-
-  /* ---------- TRACKLIST ---------- */
   .lista-canciones { max-width:600px; margin: 20px auto; padding: 0 10px; }
   .track{
     display:flex; align-items:center; gap:16px; padding:12px 10px;
@@ -89,8 +71,6 @@
   .titulo{ font-size:16px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .artista-track{ font-size:13px; color:var(--suave); margin-top:2px; }
   .dur{ font-size:14px; color:var(--suave); font-variant-numeric:tabular-nums; }
-  
-  /* Icono de ecualizador animado para la canción sonando */
   .track.sonando .num { display: none; }
   .ecualizador { display:none; width:20px; justify-content:space-between; align-items:flex-end; height:14px; }
   .track.sonando .ecualizador { display:flex; }
@@ -99,8 +79,6 @@
   .ecualizador span:nth-child(2) { height:50%; animation-delay:0.3s; }
   .ecualizador span:nth-child(3) { height:75%; animation-delay:0.2s; }
   @keyframes eq { 0%,100% { height:20%; } 50% { height:100%; } }
-
-  /* ---------- MINI REPRODUCTOR ---------- */
   .mini-player{
     position:fixed; left:12px; right:12px; bottom:70px; z-index:90;
     background:rgba(40, 20, 15, 0.95); backdrop-filter:blur(20px);
@@ -115,8 +93,6 @@
   .mini-artista{ font-size:12px; color:var(--suave); }
   .mini-controles{ display:flex; align-items:center; gap:12px; }
   .mini-btn{ background:none; border:none; color:#fff; font-size:18px; cursor:pointer; padding:4px; }
-
-  /* ---------- REPRODUCTOR PANTALLA COMPLETA ---------- */
   .full-player{
     position:fixed; inset:0; z-index:100;
     background:linear-gradient(180deg, #2a1105 0%, #120805 100%);
@@ -125,7 +101,6 @@
     overflow-y:auto;
   }
   .full-player.visible { transform:translateY(0); }
-  
   .close-btn{
     position:absolute; top:20px; left:20px; background:rgba(255,255,255,0.1);
     border:none; color:#fff; width:36px; height:36px; border-radius:50%;
@@ -138,8 +113,6 @@
   }
   .full-titulo{ font-size:24px; font-weight:800; margin-top:30px; text-align:center; }
   .full-artista{ font-size:18px; color:var(--suave); margin-top:4px; }
-  
-  /* Letra scrolleable */
   .full-letra-container {
     width:100%; max-width:400px; margin:30px 0; flex:1;
     overflow-y:auto; mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
@@ -150,18 +123,13 @@
     text-align:center; font-size:18px; line-height:1.8; font-weight:600; color:#d1c8c5;
     white-space:pre-line;
   }
-
-  /* Controles inferiores */
   .progreso-container { width:100%; max-width:400px; margin-bottom:20px; }
   .tiempos { display:flex; justify-content:space-between; font-size:12px; color:var(--suave); margin-bottom:8px; }
   .barra-progreso { width:100%; height:6px; background:rgba(255,255,255,0.2); border-radius:4px; position:relative; cursor:pointer; }
   .barra-progreso-actual { height:100%; background:#fff; border-radius:4px; width:0%; pointer-events:none; }
-  
   .controles-full { display:flex; align-items:center; justify-content:center; gap:30px; margin-bottom:30px; width:100%; }
   .btn-control { background:none; border:none; color:#fff; font-size:24px; cursor:pointer; }
   .btn-control.play-pause { font-size:40px; }
-
-  /* ---------- BARRA DE NAVEGACIÓN INFERIOR ---------- */
   .bottom-nav{
     position:fixed; bottom:0; left:0; right:0; height:60px; z-index:80;
     background:rgba(18,8,5,0.9); backdrop-filter:blur(20px);
@@ -171,7 +139,6 @@
   .nav-item{ display:flex; flex-direction:column; align-items:center; color:var(--suave); font-size:10px; gap:4px; cursor:pointer; }
   .nav-item.activo { color:#fff; }
   .nav-item svg { width:24px; height:24px; fill:currentColor; }
-
 </style>
 </head>
 <body>
@@ -181,7 +148,6 @@
   <h1>3 Días</h1>
   <div class="artista">Enrique</div>
   <div class="meta">Álbum • 2026 • 12 Pistas</div>
-  
   <button class="btn-play-principal" onclick="reproducir(1)">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
     Reproducir
@@ -218,12 +184,10 @@ Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su mo
   <div class="full-titulo" id="full-titulo">Canción</div>
   <div class="full-artista">Enrique</div>
 
-  <!-- Letra -->
   <div class="full-letra-container" id="full-letra-container">
     <div class="full-letra" id="full-letra">Selecciona una canción para ver la letra...</div>
   </div>
 
-  <!-- Progreso -->
   <div class="progreso-container">
     <div class="tiempos">
       <span id="tiempo-actual">0:00</span>
@@ -234,7 +198,6 @@ Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su mo
     </div>
   </div>
 
-  <!-- Controles -->
   <div class="controles-full">
     <button class="btn-control">⏮</button>
     <button class="btn-control play-pause" id="btn-full-play" onclick="togglePlay(event)">▶</button>
@@ -266,22 +229,21 @@ Gracias por todo en verdad, y espero me puedas perdonar por lo que hice en su mo
 
 <script>
 /* ============================================================
-   TUS DATOS AQUÍ
+   TUS DATOS AQUÍ CON AUDIOS CONECTADOS
    ============================================================ */
 const CANCIONES = [
-  { n:1, titulo:"Una Vida", dur:"2:24", audio:"",
-    letra:"Si te llevé a la luna ah-ah y no fue suficiente\nPensando si eres mía ah-ah no sales de mi mente\nSigo triste fumando imagina qué haría\nQue tus besos fueran toda mi compañía\nMami sabes contigo brillar como el día\n\nY en el humo del gallo entregarte una vida\nY en el humo del gallo entregarte una vida\nRecordar cuando nos veíamos a escondidas\n\nMami\nY es la N la A y la Z viejo\nEh\nJa-ja\n\nOlvidaría tu nombre eh-eh me acostumbré a tenerte\nCantando mis canciones eh-eh obligado a quererte\nQue en la noche me abrace el humo es medicina\nPorque el cora la mente tu voz me alucina ah-ah\nBaby sabes contigo digan lo que digan\nY en el humo si quieres te entrego una vida\nY en el humo si quieres te entrego una vida\nPasa el tiempo en mi pecho más grande la herida" },
-  { n:2, titulo:"Canción 2", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:3, titulo:"Canción 3", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:4, titulo:"Canción 4", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:5, titulo:"Canción 5", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:6, titulo:"Canción 6", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:7, titulo:"Canción 7", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:8, titulo:"Canción 8", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:9, titulo:"Canción 9", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:10, titulo:"Canción 10", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:11, titulo:"Canción 11", dur:"0:00", audio:"", letra:"[Letra pendiente]" },
-  { n:12, titulo:"Canción 12", dur:"0:00", audio:"", letra:"[Letra pendiente]" }
+  { n:1,  titulo:"Una Vida", dur:"2:24", audio:"unavida.mp3", letra:"Letra próximamente..." },
+  { n:2,  titulo:"OJITOS DE MIEL", dur:"4:19", audio:"ojitosdemiel.mp3", letra:"Letra próximamente..." },
+  { n:3,  titulo:"VIAJA CONMIGO", dur:"3:21", audio:"viajaconmigo.mp3", letra:"Letra próximamente..." },
+  { n:4,  titulo:"COLOR ROSE", dur:"3:05", audio:"colorrose.mp3", letra:"Letra próximamente..." },
+  { n:5,  titulo:"UN SECRETO", dur:"3:23", audio:"unsecreto.mp3", letra:"Letra próximamente..." },
+  { n:6,  titulo:"EN LAS MADRUGADAS", dur:"2:42", audio:"enlasmadrugadas.mp3", letra:"Letra próximamente..." },
+  { n:7,  titulo:"RHB TRACK", dur:"2:54", audio:"rhbtrack.mp3", letra:"Letra próximamente..." },
+  { n:8,  titulo:"COMO LE EXPLICO", dur:"3:10", audio:"comoleexplico.mp3", letra:"Letra próximamente..." },
+  { n:9,  titulo:"A.N.N.A.D", dur:"2:40", audio:"annad.mp3", letra:"Letra próximamente..." },
+  { n:10, titulo:"SE LO PLATIQUÉ A LA LUNA", dur:"2:53", audio:"seloplatiquealuna.mp3", letra:"Letra próximamente..." },
+  { n:11, titulo:"BELLA", dur:"3:35", audio:"bella.mp3", letra:"Letra próximamente..." },
+  { n:12, titulo:"BONUS TRACK", dur:"1:38", audio:"bonustrack.mp3", letra:"Letra próximamente..." }
 ];
 
 /* LOGICA DE LA APP */
@@ -301,14 +263,12 @@ const tiempoTotal = document.getElementById('tiempo-total');
 
 let actual = null;
 
-// Formatear tiempo
 function formatTiempo(s) {
   if(!isFinite(s)) return '0:00';
   const m = Math.floor(s/60), r = Math.floor(s%60);
   return m + ':' + String(r).padStart(2,'0');
 }
 
-// Pintar la lista
 function pintarLista() {
   lista.innerHTML = CANCIONES.map(c => `
     <div class="track" data-n="${c.n}" onclick="reproducir(${c.n})">
@@ -323,51 +283,40 @@ function pintarLista() {
   `).join('');
 }
 
-// Reproducir canción
 function reproducir(n) {
   const c = CANCIONES.find(x => x.n === n);
   if(!c) return;
 
-  // Actualizar UI de la lista
   document.querySelectorAll('.track').forEach(t => t.classList.remove('sonando'));
   const trackDom = document.querySelector(`.track[data-n="${n}"]`);
   if(trackDom) trackDom.classList.add('sonando');
 
-  // Actualizar textos
   miniTitulo.textContent = c.titulo;
   fullTitulo.textContent = c.titulo;
   fullLetra.textContent = c.letra;
-  
-  // Mostrar mini player
   miniPlayer.classList.add('visible');
 
-  // Cargar audio (si tuviera)
   if (actual !== n) {
     actual = n;
-    if (c.audio) {
-      audio.src = c.audio;
-      audio.play().catch(()=>console.log("Sin audio aún"));
+    audio.src = c.audio;
+    audio.play().then(()=>{
       actualizarBotonPlay(true);
-    } else {
+    }).catch(()=>{
+      // Si el archivo no existe o falla la red
+      console.log("Error al reproducir, verifica el nombre del archivo");
       actualizarBotonPlay(false);
-      tiempoActual.textContent = "0:00";
-      tiempoTotal.textContent = c.dur;
-      barraProgreso.style.width = "0%";
-    }
+    });
+    tiempoActual.textContent = "0:00";
+    tiempoTotal.textContent = c.dur;
+    barraProgreso.style.width = "0%";
   } else {
-    // Si ya estaba seleccionada, solo alterna play/pause
-    if(c.audio) togglePlay();
+    togglePlay();
   }
 }
 
-// Alternar Play/Pause
 function togglePlay(e) {
-  if(e) e.stopPropagation(); // Evitar que se abra el full player si tocas el play en el mini
-  if (!audio.src) {
-    // Si no hay audio real aún, solo simulamos
-    actualizarBotonPlay(audio.paused); 
-    return;
-  }
+  if(e) e.stopPropagation(); 
+  if (!audio.src) return;
 
   if (audio.paused) {
     audio.play();
@@ -378,25 +327,21 @@ function togglePlay(e) {
   }
 }
 
-// Actualizar iconos de play
 function actualizarBotonPlay(reproduciendo) {
   miniBtnPlay.textContent = reproduciendo ? '❚❚' : '▶';
   btnFullPlay.textContent = reproduciendo ? '❚❚' : '▶';
 }
 
-// Abrir full player
 function abrirFullPlayer() {
   if (!actual) return;
   fullPlayer.classList.add('visible');
   fullLetraContainer.scrollTop = 0;
 }
 
-// Cerrar full player
 function cerrarFullPlayer() {
   fullPlayer.classList.remove('visible');
 }
 
-// Progreso de la barra
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     const pct = (audio.currentTime / audio.duration) * 100;
@@ -412,11 +357,9 @@ audio.addEventListener('loadedmetadata', () => {
 audio.addEventListener('ended', () => {
   actualizarBotonPlay(false);
   barraProgreso.style.width = '0%';
-  // Pasar a la siguiente (opcional)
   if (actual < 12) reproducir(actual + 1);
 });
 
-// Saltar audio
 function saltarAudio(e) {
   if (!audio.duration) return;
   const rect = e.currentTarget.getBoundingClientRect();
@@ -428,4 +371,4 @@ function saltarAudio(e) {
 pintarLista();
 </script>
 </body>
- </html>
+</html> 
